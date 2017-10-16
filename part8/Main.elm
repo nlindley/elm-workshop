@@ -136,11 +136,20 @@ type Msg
 
 decodeResponse : Value -> Msg
 decodeResponse json =
-    -- TODO use decodeValue to decode the response into a Msg.
-    --
-    -- Hint: look at the definition of Msg and
-    -- the definition of responseDecoder
-    HandleSearchError (Just "TODO decode the response!")
+    case decodeValue responseDecoder json of
+        Ok results ->
+            HandleSearchResponse results
+
+        Err error ->
+            HandleSearchError (Just error)
+
+
+
+-- TODO use decodeValue to decode the response into a Msg.
+--
+-- Hint: look at the definition of Msg and
+-- the definition of responseDecoder
+-- HandleSearchError (decodeValue responseDecoder json)
 
 
 port githubSearch : String -> Cmd msg

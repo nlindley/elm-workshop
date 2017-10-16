@@ -2,7 +2,7 @@ port module Stylesheets exposing (..)
 
 import Css.File exposing (..)
 import ElmHubCss
-import Html exposing (div)
+import Platform
 
 
 port files : CssFileStructure -> Cmd msg
@@ -13,11 +13,10 @@ cssFiles =
     toFileStructure [ ( "style.css", compile [ ElmHubCss.css ] ) ]
 
 
-main : Program Never Model Msg
+main : Program Never () msg
 main =
-    Html.program
+    Platform.program
         { init = ( (), files cssFiles )
-        , view = \_ -> (div [] [])
         , update = \_ _ -> ( (), Cmd.none )
         , subscriptions = \_ -> Sub.none
         }
